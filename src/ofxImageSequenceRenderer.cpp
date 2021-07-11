@@ -256,6 +256,22 @@ void ofxImageSequenceRenderer::draw(float x, float y, float w, float h) {
 }
 
 // --------------------------------------------------------
+void ofxImageSequenceRenderer::draw(float x, float y, bool scaleToWindow) {
+
+    if (scaleToWindow) {
+        draw(
+            x, 
+            y, 
+            getWidth() > getHeight() ? ofGetWidth() : getWidth() * ofGetHeight() / getHeight(),
+            getWidth() > getHeight() ? getHeight() * ofGetWidth() / getWidth() : ofGetHeight()
+        );
+    }
+    else {
+        draw(x, y, getWidth(), getHeight());
+    }
+}
+
+// --------------------------------------------------------
 float ofxImageSequenceRenderer::calcCurveAt(float _param, AnimCurve _curveType, bool _bReverse) {
     
     if (_bReverse) return 1.0-ofxAnimatable::calcCurveAt(1.0-_param, _curveType);

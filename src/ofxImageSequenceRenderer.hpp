@@ -37,6 +37,9 @@ public:
     
     // Draw the last rendered frame
     virtual void draw(float x, float y, float w, float h);
+    // Optionally scale the image to the size of the window without disturbing
+    // its aspect ratio.
+    virtual void draw(float x, float y, bool scaleToWindow = false);
     
     // Get the size of this renderer
     int getWidth() {return canvas.getWidth();}
