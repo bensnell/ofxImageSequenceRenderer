@@ -4,8 +4,8 @@
 //  Created by Ben Snell in 2019
 //
 
-#ifndef ofxImageSequenceVideo_hpp
-#define ofxImageSequenceVideo_hpp
+#ifndef ofxImageSequenceRenderer_hpp
+#define ofxImageSequenceRenderer_hpp
 
 #include "ofMain.h"
 #include "ofxRemoteUIServer.h"
