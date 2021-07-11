@@ -17,99 +17,99 @@
 // from point clouds to meshes to voxel grids
 class ofxImageSequenceRenderer {
 public:
-    
+
     // What scale are the objects of interest? This is used primarily
     // in setting the bounds for camera parameters. By default, this
     // multiplies your provided bounds by 3.
     virtual void setScale(float _scale);
-    
+
     // Setup rendering parameters using ofxRemoteUI
     virtual void setupParams();
-    
+
     // Setup the renderer (allocate fbos, etc.)
     virtual void setup();
-    
+
     // Update the renderer
     virtual void update();
-    
+
     // Render the next frame
     virtual void render();
-    
+
     // Draw the last rendered frame
     virtual void draw(float x, float y, float w, float h);
     // Optionally scale the image to the size of the window without disturbing
     // its aspect ratio.
     virtual void draw(float x, float y, bool scaleToWindow = false);
-    
+
     // Get the size of this renderer
-    int getWidth() {return canvas.getWidth();}
-    int getHeight() {return canvas.getHeight();}
-    
+    int getWidth() { return canvas.getWidth(); }
+    int getHeight() { return canvas.getHeight(); }
+
 protected:
-    
+
     // User-defined render function
     // Override this to define how you render.
     // Provided are two params: one which moves linearly and the other
     // moving according to the transformation curve.
-    virtual void uRender(ofFbo& uFbo, ofCamera& uCam, float paramLinear, 
+    virtual void uRender(ofFbo& uFbo, ofCamera& uCam, float paramLinear,
         float paramTransf, float scale);
-    
+
 private:
-    
+
     // -------------------------
     // Scaling Params
-    
+
     float s1 = 1.0;
     float s30 = s1 * 30.0;
     float s300 = s1 * 300.0;
     float s3000 = s1 * 3000.0;
-    
+
     // -------------------------
     // Source Data (to be provided by user)
 
-    
+
     // --------------------------
     // Camera
-    
+
     ofCamera cam;
-    
+
     // -------------------------
     // Fbo
-    
+
     // Fbo for full size rendering
     ofFbo canvas;
     ofPixels pix;
-    
+
     // Intermediary Render function that prepares the user rendering
     // context.
     // Optionally pass a scale that will scale the camera. 
     void _render(ofFbo& _fbo, float _param, float _scale = 1.0);
-    
+
     // --------------------------
     // Params
 
     // EXTANT
-    
+
     // Is this rendering wrapped? That is, does it go from
     // A to B and back to A, or does it just go from A to B?
     bool bWrapped = true;
-    
+
     // General Params
     float nearDist = 0.1; // must be > 0
     float farDist = 20000;
-    
+
     // Easing curve for position and orientation
     AnimCurve easeTransf = AnimCurve::EASE_IN_EASE_OUT;
     bool bReverseEaseTransf = false;
     // A represents near parameters
     // B represents far parameters
-    
+
     // Position of camera
     glm::vec3 aCamPos = glm::vec3(0, 0, 10);
     glm::vec3 bCamPos = glm::vec3(0, 0, 10);
     // Direction of camera
-    glm::vec3 aCamLookAtPos = glm::vec3(0,0,0);
-    glm::vec3 bCamLookAtPos = glm::vec3(0,0,0);
+    glm::vec3 aCamLookAtPos = glm::vec3(0, 0, 0);
+    glm::vec3 bCamLookAtPos = glm::vec3(0, 0, 0);
     // FOV of camera
     float aFov = 60;
     float bFov = 60;
@@ -122,7 +122,7 @@ private:
     vector<string> getUpVectorNames() { return { "X", "Y", "Z" }; }
     UpVector upVector = UpVector::UP_Z;
     bool bFlipUpVector = false;
-    glm::vec3 getUpVector() { 
+    glm::vec3 getUpVector() {
         glm::vec3 out(0, 0, 0);
         out[CLAMP(int(upVector), 0, 2)] = bFlipUpVector ? -1 : 1;
         return out;
@@ -130,29 +130,40 @@ private:
 
     // General Rendering Params
     glm::vec2 canvasDims = glm::vec2(3840, 2160);
-    
+
     // Single Render Params
     bool bRenderOneFrame = false;
     float renderOneFrameParam = 0.0;
     bool bRenderOneFrameWithDebugParam = false;
     string singleFrameFolderName = "singleFrames";
-    
+
     // Sequence Rendering Params
     int nRotations = 2;
     float rotationOffset = 0.0; // [0,1]
     float renderingLength = 300.0; // second
     float framesPerSecond = 60;
-    
+
     bool bStartRenderingSequence = false;
     bool bStopRenderingSequence = false;
     int renderingStartFrame = 0;
     string sequenceFolderNamePrefix = "seq";
     string sequenceParentFolderPath = "sequences";
-    
+
     bool bRendering = false;
     int nFrames = 0;
     int currentFrameIndex = 0; // [0, nFrames-1]
     string sequenceExportPath;
+
+    enum EXPORT_IMAGE_TYPE {
+        EXPORT_IMAGE_INVALID = -1,
+        EXPORT_IMAGE_JPG,
+        EXPORT_IMAGE_PNG,
+        EXPORT_IMAGE_TIF,   // best speed, while retaining best quality
+        EXPORT_IMAGE_NUM
+    };
+    vector<string> exportImageTypeNames = { "jpg", "png", "tif" };
+    EXPORT_IMAGE_TYPE imageType = EXPORT_IMAGE_TIF;
+    string getImageTypeString();
     
     
     // --------------------------

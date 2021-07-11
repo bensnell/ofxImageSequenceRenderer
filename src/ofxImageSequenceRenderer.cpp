@@ -65,6 +65,7 @@ void ofxImageSequenceRenderer::setupParams() {
     RUI_SHARE_PARAM_WCN("Rndr- Rotation Offset", rotationOffset, 0, 1);
     RUI_SHARE_PARAM_WCN("Rndr- Rendering Length", renderingLength, 0, 1200);
     RUI_SHARE_PARAM_WCN("Rndr- FPS", framesPerSecond, 0, 60);
+    RUI_SHARE_ENUM_PARAM_WCN("Rndr- Image Type", imageType, EXPORT_IMAGE_JPG, EXPORT_IMAGE_TIF, exportImageTypeNames);
     RUI_SHARE_PARAM_WCN("Rndr- Start Rendering Sequence", bStartRenderingSequence);
     RUI_SHARE_PARAM_WCN("Rndr- Stop Rendering Sequence", bStopRenderingSequence);
     RUI_SHARE_PARAM_WCN("Rndr- Rendering Start Frame", renderingStartFrame, 0, 72000);
@@ -169,7 +170,7 @@ void ofxImageSequenceRenderer::render() {
         _render(canvas, thisParam);
         
         // Save it
-        string exportPath = singleFrameFolderName + "/img_" + ofGetTimestampString() + ".png";
+        string exportPath = singleFrameFolderName + "/img_" + ofGetTimestampString() + "." + getImageTypeString();
         canvas.readToPixels(pix);
         ofSaveImage(pix, exportPath);
     }
@@ -186,7 +187,7 @@ void ofxImageSequenceRenderer::render() {
         stringstream ss;
         ss << setfill('0') << setw(5);
         ss << currentFrameIndex;
-        string exportPath = sequenceExportPath + ss.str() + ".png";
+        string exportPath = sequenceExportPath + ss.str() + "." + getImageTypeString();
         canvas.readToPixels(pix);
         ofSaveImage(pix, exportPath);
         
@@ -293,6 +294,11 @@ float ofxImageSequenceRenderer::getParamTransf(float _param) {
 }
 
 // --------------------------------------------------------
+string ofxImageSequenceRenderer::getImageTypeString() {
+    if (imageType == EXPORT_IMAGE_INVALID || imageType == EXPORT_IMAGE_NUM)
+        return exportImageTypeNames.front();
+    return exportImageTypeNames[static_cast<int>(imageType)];
+}
 
 // --------------------------------------------------------
 
