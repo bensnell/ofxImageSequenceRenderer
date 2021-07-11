@@ -257,14 +257,14 @@ void ofxImageSequenceRenderer::draw(float x, float y, float w, float h) {
 }
 
 // --------------------------------------------------------
-void ofxImageSequenceRenderer::draw(float x, float y, bool scaleToWindow) {
+void ofxImageSequenceRenderer::draw(float x, float y, float w, float h, bool retainAspectRatio) {
 
-    if (scaleToWindow) {
+    if (retainAspectRatio) {
         draw(
             x, 
             y, 
-            getWidth() > getHeight() ? ofGetWidth() : getWidth() * ofGetHeight() / getHeight(),
-            getWidth() > getHeight() ? getHeight() * ofGetWidth() / getWidth() : ofGetHeight()
+            getWidth() > getHeight() ? w : getWidth() * h / getHeight(),
+            getWidth() > getHeight() ? getHeight() * w / getWidth() : h
         );
     }
     else {

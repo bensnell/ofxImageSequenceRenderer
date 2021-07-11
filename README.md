@@ -88,7 +88,7 @@ void ofApp::draw() {
     // First render imagery to fbo
     renderer.render();
     // Then, draw it for debugging purposes (if so desired)
-    renderer.draw(0, 0, true);
+    renderer.draw(0, 0, ofGetWidth(), ofGetHeight(), true);
 }
 ```
 
