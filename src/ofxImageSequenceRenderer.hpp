@@ -37,8 +37,7 @@ public:
 
     // Draw the last rendered frame
     // Optionally retain aspect ratio
-    virtual void draw(float x, float y, float w, float h);
-    virtual void draw(float x, float y, float w, float h, bool retainAspectRatio);
+    virtual void draw(float x, float y, float w, float h, bool retainAspectRatio = false);
 
     // Get the size of this renderer
     int getWidth() { return canvas.getWidth(); }

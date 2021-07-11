@@ -246,21 +246,10 @@ void ofxImageSequenceRenderer::uRender(ofFbo& uFbo, ofCamera& uCam, float paramL
 }
 
 // --------------------------------------------------------
-void ofxImageSequenceRenderer::draw(float x, float y, float w, float h) {
-    
-    if (bRendering) {
-        canvas.draw(x, y, w, h);
-    } else {
-        // Draw the debug version of the render
-        canvasDebug.draw(x, y, w, h);
-    }
-}
-
-// --------------------------------------------------------
 void ofxImageSequenceRenderer::draw(float x, float y, float w, float h, bool retainAspectRatio) {
 
     if (retainAspectRatio) {
-        draw(
+        (bRendering ? canvas : canvasDebug).draw(
             x, 
             y, 
             getWidth() > getHeight() ? w : getWidth() * h / getHeight(),
@@ -268,7 +257,7 @@ void ofxImageSequenceRenderer::draw(float x, float y, float w, float h, bool ret
         );
     }
     else {
-        draw(x, y, getWidth(), getHeight());
+        (bRendering ? canvas : canvasDebug).draw(x, y, getWidth(), getHeight());
     }
 }
 
