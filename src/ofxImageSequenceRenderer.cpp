@@ -61,6 +61,7 @@ void ofxImageSequenceRenderer::setupParams() {
     RUI_SHARE_PARAM_WCN("Rndr- Single Frame Folder Name", singleFrameFolderName);
     
     RUI_NEW_GROUP("Rndr- Sequence Rendering");
+    RUI_SHARE_PARAM_WCN("Rndr- Wrapped", bWrapped);
     RUI_SHARE_PARAM_WCN("Rndr- Num Rotations", nRotations, 0, 10);
     RUI_SHARE_PARAM_WCN("Rndr- Rotation Offset", rotationOffset, 0, 1);
     RUI_SHARE_PARAM_WCN("Rndr- Rendering Length", renderingLength, 0, 1200);
@@ -79,10 +80,15 @@ void ofxImageSequenceRenderer::setupParams() {
     RUI_SHARE_PARAM_WCN("Rndr- Dbg Rndr Speed Mult", debugRenderingSpeedMult, 0, 25);
     RUI_SHARE_PARAM_WCN("Rndr- Debug Downsample Canvas Denom", debugDownsampleCanvasDenom, 0, 32);
     RUI_SHARE_PARAM_WCN("Rndr- Toggle Debug Play", bToggleDebugPlay);
+    RUI_SHARE_PARAM_WCN("PCR- Dbg Rndr Manual Step", debugRenderingManualStep, 0, 0.05);
+
 }
 
 // --------------------------------------------------------
 void ofxImageSequenceRenderer::setup() {
+
+    // Add Listeners
+    ofAddListener(ofEvents().keyPressed, this, &ofxImageSequenceRenderer::keyPressed);
     
     // Setup the data...
     
@@ -143,6 +149,12 @@ void ofxImageSequenceRenderer::update() {
         bDebugRendering = !bDebugRendering;
         RUI_PUSH_TO_CLIENT();
     }
+    if (bDebugRendering) {
+        // Increment the rendering param (with optional speed multiplier)
+        float increment = (1.0 / ofGetFrameRate()) / renderingLength * debugRenderingSpeedMult;
+        updateDebugRenderingParam(increment);
+    }
+
     if (bDebugRendering) {
         // If the param is not in the range, then clamp it to the range
         debugRenderingParam = CLAMP(debugRenderingParam, debugRenderingStartParam, debugRenderingStopParam);
@@ -290,5 +302,38 @@ string ofxImageSequenceRenderer::getImageTypeString() {
 }
 
 // --------------------------------------------------------
+void ofxImageSequenceRenderer::updateDebugRenderingParam(float increment) {
+
+    // If the param is not in the range, then clamp it to the range
+    debugRenderingParam = CLAMP(debugRenderingParam, debugRenderingStartParam, debugRenderingStopParam);
+    // Increment the rendering param (with optional speed multiplier)
+    debugRenderingParam += increment + 1.0;
+    // Wrap it so it's within range if it isn't already
+    debugRenderingParam = fmod(debugRenderingParam - debugRenderingStartParam, debugRenderingStopParam - debugRenderingStartParam) + debugRenderingStartParam;
+    RUI_PUSH_TO_CLIENT();
+}
 
 // --------------------------------------------------------
+void ofxImageSequenceRenderer::keyPressed(ofKeyEventArgs& e)
+{
+    if (e.key == ' ')
+    {
+        bToggleDebugPlay = !bToggleDebugPlay;
+        RUI_PUSH_TO_CLIENT();
+    }
+    if (e.hasModifier(OF_KEY_CONTROL)) {
+        if (e.key == OF_KEY_LEFT) {
+            updateDebugRenderingParam(-debugRenderingManualStep);
+        }
+        else if (e.key == OF_KEY_RIGHT) {
+            updateDebugRenderingParam(debugRenderingManualStep);
+        }
+    }
+}
+
+// --------------------------------------------------------
+
+// --------------------------------------------------------
+
+// --------------------------------------------------------
+

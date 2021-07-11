@@ -43,6 +43,9 @@ public:
     int getWidth() { return canvas.getWidth(); }
     int getHeight() { return canvas.getHeight(); }
 
+    // Callbacks
+    virtual void keyPressed(ofKeyEventArgs& e);
+
 protected:
 
     // User-defined render function
@@ -186,6 +189,8 @@ private:
     ofFbo canvasDebug;
     bool bToggleDebugPlay = false;
     bool bDebugRendering = false;
+
+    float debugRenderingManualStep = 0.01;
     
     
     // --------------------------
@@ -203,6 +208,9 @@ private:
     glm::vec3 lerp(glm::vec3 x, glm::vec3 y, float t) {
         return x * (1.f - t) + y * t;
     }
+
+    // Update rendering params
+    void updateDebugRenderingParam(float increment);
     
 };
 
