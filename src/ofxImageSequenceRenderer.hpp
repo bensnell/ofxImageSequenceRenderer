@@ -173,6 +173,7 @@ private:
     // Debug Rendering view
     // Set this param to what you want to manually see
     float debugRenderingParam = 0.0; // [0, 1]
+    bool bPushDebugRenderingParamToRUI = true;
     
     // Adjust the bounds on the rendering window to get a close-up view
     float debugRenderingStartParam = 0.0;

@@ -80,7 +80,8 @@ void ofxImageSequenceRenderer::setupParams() {
     RUI_SHARE_PARAM_WCN("Rndr- Dbg Rndr Speed Mult", debugRenderingSpeedMult, 0, 25);
     RUI_SHARE_PARAM_WCN("Rndr- Debug Downsample Canvas Denom", debugDownsampleCanvasDenom, 0, 32);
     RUI_SHARE_PARAM_WCN("Rndr- Toggle Debug Play", bToggleDebugPlay);
-    RUI_SHARE_PARAM_WCN("PCR- Dbg Rndr Manual Step", debugRenderingManualStep, 0, 0.05);
+    RUI_SHARE_PARAM_WCN("Rndr- Dbg Rndr Manual Step", debugRenderingManualStep, 0, 0.05);
+    RUI_SHARE_PARAM_WCN("Rndr- Push Dbg Rndr Param to RUI", bPushDebugRenderingParamToRUI);
 
 }
 
@@ -155,16 +156,16 @@ void ofxImageSequenceRenderer::update() {
         updateDebugRenderingParam(increment);
     }
 
-    if (bDebugRendering) {
-        // If the param is not in the range, then clamp it to the range
-        debugRenderingParam = CLAMP(debugRenderingParam, debugRenderingStartParam, debugRenderingStopParam);
-        // Increment the rendering param (with optional speed multiplier)
-        float increment = (1.0/ofGetFrameRate())/renderingLength;
-        debugRenderingParam += increment * debugRenderingSpeedMult;
-        // Wrap it so it's within range if it isn't already
-        debugRenderingParam = fmod(debugRenderingParam-debugRenderingStartParam, debugRenderingStopParam-debugRenderingStartParam)+debugRenderingStartParam;
-        RUI_PUSH_TO_CLIENT();
-    }
+    //if (bDebugRendering) {
+    //    // If the param is not in the range, then clamp it to the range
+    //    debugRenderingParam = CLAMP(debugRenderingParam, debugRenderingStartParam, debugRenderingStopParam);
+    //    // Increment the rendering param (with optional speed multiplier)
+    //    float increment = (1.0/ofGetFrameRate())/renderingLength;
+    //    debugRenderingParam += increment * debugRenderingSpeedMult;
+    //    // Wrap it so it's within range if it isn't already
+    //    debugRenderingParam = fmod(debugRenderingParam-debugRenderingStartParam, debugRenderingStopParam-debugRenderingStartParam)+debugRenderingStartParam;
+    //    RUI_PUSH_TO_CLIENT();
+    //}
     
 }
 
@@ -311,7 +312,7 @@ void ofxImageSequenceRenderer::updateDebugRenderingParam(float increment) {
     debugRenderingParam += increment + 1.0;
     // Wrap it so it's within range if it isn't already
     debugRenderingParam = fmod(debugRenderingParam - debugRenderingStartParam, debugRenderingStopParam - debugRenderingStartParam) + debugRenderingStartParam;
-    RUI_PUSH_TO_CLIENT();
+    if (bPushDebugRenderingParamToRUI) RUI_PUSH_TO_CLIENT();
 }
 
 // --------------------------------------------------------
