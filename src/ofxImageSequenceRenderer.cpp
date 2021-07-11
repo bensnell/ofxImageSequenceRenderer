@@ -238,7 +238,8 @@ void ofxImageSequenceRenderer::_render(ofFbo& _fbo, float _param, float _scale) 
 }
 
 // --------------------------------------------------------
-void ofxImageSequenceRenderer::uRender(ofFbo& uFbo, ofCamera& uCam, float paramLinear, float paramTransf, float scale) {
+void ofxImageSequenceRenderer::uRender(ofFbo& uFbo, ofCamera& uCam, float paramLinear, 
+    float paramTransf, float scale) {
 
     // Render some fake input
     uFbo.begin();
