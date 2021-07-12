@@ -64,7 +64,7 @@ void ofxImageSequenceRenderer::setupParams() {
     RUI_SHARE_PARAM_WCN("Rndr- Wrapped", bWrapped);
     RUI_SHARE_PARAM_WCN("Rndr- Num Rotations", nRotations, 0, 10);
     RUI_SHARE_PARAM_WCN("Rndr- Rotation Offset", rotationOffset, 0, 1);
-    RUI_SHARE_PARAM_WCN("Rndr- Rendering Length", renderingLength, 0, 1200);
+    RUI_SHARE_PARAM_WCN("Rndr- Rendering Length", renderingLength, 0.01, 1200);
     RUI_SHARE_PARAM_WCN("Rndr- FPS", framesPerSecond, 0, 60);
     RUI_SHARE_ENUM_PARAM_WCN("Rndr- Image Type", imageType, EXPORT_IMAGE_JPG, EXPORT_IMAGE_TIF, exportImageTypeNames);
     RUI_SHARE_PARAM_WCN("Rndr- Start Rendering Sequence", bStartRenderingSequence);
