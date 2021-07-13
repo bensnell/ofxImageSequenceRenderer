@@ -304,7 +304,7 @@ string ofxImageSequenceRenderer::getImageTypeString() {
 }
 
 // --------------------------------------------------------
-void ofxImageSequenceRenderer::updateDebugRenderingParam(float increment) {
+void ofxImageSequenceRenderer::updateDebugRenderingParam(float increment, bool bForcePushToRUI) {
 
     // If the param is not in the range, then clamp it to the range
     debugRenderingParam = CLAMP(debugRenderingParam, debugRenderingStartParam, debugRenderingStopParam);
@@ -312,7 +312,7 @@ void ofxImageSequenceRenderer::updateDebugRenderingParam(float increment) {
     debugRenderingParam += increment + 1.0;
     // Wrap it so it's within range if it isn't already
     debugRenderingParam = fmod(debugRenderingParam - debugRenderingStartParam, debugRenderingStopParam - debugRenderingStartParam) + debugRenderingStartParam;
-    if (bPushDebugRenderingParamToRUI) RUI_PUSH_TO_CLIENT();
+    if (bPushDebugRenderingParamToRUI || bForcePushToRUI) RUI_PUSH_TO_CLIENT();
 }
 
 // --------------------------------------------------------
@@ -325,10 +325,10 @@ void ofxImageSequenceRenderer::keyPressed(ofKeyEventArgs& e)
     }
     if (e.hasModifier(OF_KEY_CONTROL)) {
         if (e.key == OF_KEY_LEFT) {
-            updateDebugRenderingParam(-debugRenderingManualStep);
+            updateDebugRenderingParam(-debugRenderingManualStep, true);
         }
         else if (e.key == OF_KEY_RIGHT) {
-            updateDebugRenderingParam(debugRenderingManualStep);
+            updateDebugRenderingParam(debugRenderingManualStep, true);
         }
     }
 }

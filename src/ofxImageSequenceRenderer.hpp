@@ -211,7 +211,7 @@ private:
     }
 
     // Update rendering params
-    void updateDebugRenderingParam(float increment);
+    void updateDebugRenderingParam(float increment, bool bForcePushToRUI = false);
     
 };
 
