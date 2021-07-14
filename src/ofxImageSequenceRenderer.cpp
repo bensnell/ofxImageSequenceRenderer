@@ -125,11 +125,13 @@ void ofxImageSequenceRenderer::update() {
     if (bStartRenderingSequence) {
         bStartRenderingSequence = false;
         bRendering = true;
+        bDebugRendering = false;
         RUI_PUSH_TO_CLIENT();
         
         // Set the rendering params
         nFrames = round(renderingLength*framesPerSecond);
         currentFrameIndex = CLAMP(renderingStartFrame, 0, nFrames);
+        currentFrameIndex -= 1; // Start the rendering 1 frame before since it increments below
         sequenceExportPath = sequenceParentFolderPath+"/"+sequenceFolderNamePrefix + "_" + ofGetTimestampString() + "/";
     }
     if (bStopRenderingSequence) {
