@@ -11,7 +11,7 @@
 #include "ofxRemoteUIServer.h"
 #include "ofxAnimatable.h"
 #include "ofxAnimatableFloat.h"
-#include "ofxBlendFunctions.hpp"
+//#include "ofxBlendFunctions.hpp"
 
 // This class is meant to be extended for rendering any kind of objects
 // from point clouds to meshes to voxel grids
