@@ -42,6 +42,8 @@ public:
     // Get the size of this renderer
     int getWidth() { return canvas.getWidth(); }
     int getHeight() { return canvas.getHeight(); }
+    // Get the length of the rendering in seconds
+    float getDurationSec() { return renderingLength; }
 
     // Callbacks
     virtual void keyPressed(ofKeyEventArgs& e);
