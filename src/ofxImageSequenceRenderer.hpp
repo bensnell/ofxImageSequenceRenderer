@@ -149,6 +149,7 @@ private:
     float rotationOffset = 0.0; // [0,1]
     float renderingLength = 300.0; // second
     float framesPerSecond = 60;
+    bool bFlipRotation = false;
 
     bool bStartRenderingSequence = false;
     bool bStopRenderingSequence = false;

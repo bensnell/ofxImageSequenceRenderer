@@ -64,6 +64,7 @@ void ofxImageSequenceRenderer::setupParams() {
     RUI_SHARE_PARAM_WCN("Rndr- Wrapped", bWrapped);
     RUI_SHARE_PARAM_WCN("Rndr- Num Rotations", nRotations, 0, 10);
     RUI_SHARE_PARAM_WCN("Rndr- Rotation Offset", rotationOffset, 0, 1);
+    RUI_SHARE_PARAM_WCN("Rndr- Flip Rotation", bFlipRotation);
     RUI_SHARE_PARAM_WCN("Rndr- Rendering Length", renderingLength, 0.01, 1200);
     RUI_SHARE_PARAM_WCN("Rndr- FPS", framesPerSecond, 0, 60);
     RUI_SHARE_ENUM_PARAM_WCN("Rndr- Image Type", imageType, EXPORT_IMAGE_JPG, EXPORT_IMAGE_TIF, exportImageTypeNames);
@@ -218,7 +219,8 @@ void ofxImageSequenceRenderer::_render(ofFbo& _fbo, float _param, float _scale) 
     // Set position
     cam.setPosition(camPos);
     // Adjust the position of camera based on rotation
-    float rotDeg = (_param * float(nRotations) + rotationOffset) * 360.0;
+    float rotDeg = (_param * float(nRotations) * (bFlipRotation ? -1.0 : 1.0) 
+        + rotationOffset) * 360.0;
     cam.rotateAround(rotDeg, up, camLookAtPos);
     // Set remaining properties
     cam.lookAt(camLookAtPos, up);
