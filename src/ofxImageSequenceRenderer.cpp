@@ -157,18 +157,6 @@ void ofxImageSequenceRenderer::update() {
         float increment = (1.0 / ofGetFrameRate()) / renderingLength * debugRenderingSpeedMult;
         updateDebugRenderingParam(increment);
     }
-
-    //if (bDebugRendering) {
-    //    // If the param is not in the range, then clamp it to the range
-    //    debugRenderingParam = CLAMP(debugRenderingParam, debugRenderingStartParam, debugRenderingStopParam);
-    //    // Increment the rendering param (with optional speed multiplier)
-    //    float increment = (1.0/ofGetFrameRate())/renderingLength;
-    //    debugRenderingParam += increment * debugRenderingSpeedMult;
-    //    // Wrap it so it's within range if it isn't already
-    //    debugRenderingParam = fmod(debugRenderingParam-debugRenderingStartParam, debugRenderingStopParam-debugRenderingStartParam)+debugRenderingStartParam;
-    //    RUI_PUSH_TO_CLIENT();
-    //}
-    
 }
 
 // --------------------------------------------------------
