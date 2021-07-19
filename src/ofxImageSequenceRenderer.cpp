@@ -268,12 +268,12 @@ void ofxImageSequenceRenderer::draw(float x, float y, float w, float h, bool ret
         (bRendering ? canvas : canvasDebug).draw(
             x, 
             y, 
-            getWidth() > getHeight() ? w : getWidth() * h / getHeight(),
-            getWidth() > getHeight() ? getHeight() * w / getWidth() : h
+            w < h ? w : getWidth() * h / getHeight(),
+            w < h ? getHeight() * w / getWidth() : h
         );
     }
     else {
-        (bRendering ? canvas : canvasDebug).draw(x, y, getWidth(), getHeight());
+        (bRendering ? canvas : canvasDebug).draw(x, y, w, h);
     }
 }
 

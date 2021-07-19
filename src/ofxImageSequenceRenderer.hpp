@@ -44,6 +44,10 @@ public:
     int getHeight() { return canvas.getHeight(); }
     // Get the length of the rendering in seconds
     float getDurationSec() { return renderingLength; }
+    // Get the clipping plane range
+    glm::vec2 getClippingPlane() { return glm::vec2(nearDist, farDist); }
+    // Get the amount debug is downsampled
+    float getDebugDownsampleMultiplier() { return debugDownsampleCanvasDenom; }
 
     // Callbacks
     virtual void keyPressed(ofKeyEventArgs& e);

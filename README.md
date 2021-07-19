@@ -13,6 +13,7 @@ public:
     void setupParams();
     void setup();
     void update();
+    void keyPressed(ofKeyEventArgs& e);
 protected:
     void uRender(ofFbo& uFbo, ofCamera& uCam, float paramLinear, 
                  float paramTransf, float scale);
@@ -27,6 +28,10 @@ private:
 #include "MyRenderer.hpp"
 
 void MyRenderer::setupParams() {
+    // Set the scale of objects of interest (e.g. objects rendered
+    // are approx 1000 units wide):
+    setScale(1000);
+    
     ofxImageSequenceRenderer::setupParams();
     // setup any personal parameters, for example:
     RUI_NEW_GROUP("MY_PARAMS");
@@ -48,10 +53,15 @@ void MyRenderer::uRender(ofFbo* uFbo, ofCamera& uCam, float paramLinear,
     // This is where all our rendering happens, for example:
     uFbo.begin();
     uCam.begin(); // don't use uCam if rendering a 2D scene
-    ofSetColor(255, 0, 0);
+    ofSetColor(255, myParam, 0);
     ofDrawBox(-0.5, -0.5, -0.5, 1, 1, 1);
     uCam.end();
     uFbo.end();
+}
+
+void MyRenderer::keyPressed(ofKeyEventArgs& e) {
+    ofxImageSequenceRenderer::keyPressed(e);
+    if (e.key == 'a') myParam = (myParam + 10) % 255;
 }
 ```
 
