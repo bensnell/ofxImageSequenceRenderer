@@ -46,12 +46,12 @@ void MyRenderer::update() {
 void MyRenderer::uRender(ofFbo* uFbo, ofCamera& uCam, float paramLinear, 
 	float paramTransf, float scale) {
     // This is where all our rendering happens, for example:
-    uFbo.begin();
+    uFbo->begin();
     uCam.begin(); // don't use uCam if rendering a 2D scene
     ofSetColor(255, 0, 0);
     ofDrawBox(-0.5, -0.5, -0.5, 1, 1, 1);
     uCam.end();
-    uFbo.end();
+    uFbo->end();
 }
 ```
 
