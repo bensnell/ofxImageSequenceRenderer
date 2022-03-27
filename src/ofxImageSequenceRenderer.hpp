@@ -52,6 +52,13 @@ public:
     // Callbacks
     virtual void keyPressed(ofKeyEventArgs& e);
 
+    // Set the output folder name (not path)
+    // Use `${TIMESTAMP}` for the timestamp.
+    virtual void setOutputFolderName(string folderName) {
+        sequenceFolderName = folderName;
+        RUI_PUSH_TO_CLIENT();
+    };
+
 protected:
 
     // User-defined render function
@@ -154,7 +161,7 @@ private:
     bool bStartRenderingSequence = false;
     bool bStopRenderingSequence = false;
     int renderingStartFrame = 0;
-    string sequenceFolderNamePrefix = "seq";
+    string sequenceFolderName = "seq_${TIMESTAMP}";
     string sequenceParentFolderPath = "sequences";
 
     bool bRendering = false;

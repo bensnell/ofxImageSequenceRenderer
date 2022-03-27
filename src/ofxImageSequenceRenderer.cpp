@@ -71,7 +71,7 @@ void ofxImageSequenceRenderer::setupParams() {
     RUI_SHARE_PARAM_WCN("Rndr- Start Rendering Sequence", bStartRenderingSequence);
     RUI_SHARE_PARAM_WCN("Rndr- Stop Rendering Sequence", bStopRenderingSequence);
     RUI_SHARE_PARAM_WCN("Rndr- Rendering Start Frame", renderingStartFrame, 0, 72000);
-    RUI_SHARE_PARAM_WCN("Rndr- Sequence Folder Name Prefix", sequenceFolderNamePrefix);
+    RUI_SHARE_PARAM_WCN("Rndr- Sequence Folder Name", sequenceFolderName);
     RUI_SHARE_PARAM_WCN("Rndr- Sequence Parent Folder", sequenceParentFolderPath);
     
     RUI_NEW_GROUP("Rndr- Debug Rendering");
@@ -133,7 +133,10 @@ void ofxImageSequenceRenderer::update() {
         nFrames = round(renderingLength*framesPerSecond);
         currentFrameIndex = CLAMP(renderingStartFrame, 0, nFrames);
         currentFrameIndex -= 1; // Start the rendering 1 frame before since it increments below
-        sequenceExportPath = sequenceParentFolderPath+"/"+sequenceFolderNamePrefix + "_" + ofGetTimestampString() + "/";
+        // Generate the foldername, replacing `${TIMESTAMP}` with the current timestamp.
+        string folderName = sequenceFolderName;
+        ofStringReplace(folderName, "${TIMESTAMP}", ofGetTimestampString());
+        sequenceExportPath = sequenceParentFolderPath+"/"+ folderName + "/";
     }
     if (bStopRenderingSequence) {
         bStopRenderingSequence = false;
